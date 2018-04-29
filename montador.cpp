@@ -1,3 +1,5 @@
+/*Aparentemente a passada 1 já está funcionando corretamente*/
+
 #include <bits/stdc++.h>
 
 #define INS_SIZE 16
