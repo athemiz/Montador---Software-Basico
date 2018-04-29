@@ -21,3 +21,4 @@ _L2:read A0
 
 _done: stop
 
+_teste: .data 8 20
