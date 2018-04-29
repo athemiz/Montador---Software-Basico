@@ -23,6 +23,8 @@ bool pass_one(){
 
         else if(line[i]==';') break;
 
+
+        /*Partindo do pressuposto de que não haverão erros no arquivo de entrada então este if deve funcionar para reconhecer os comandos*/
         else if(line[i]>=97 && line[i]<=122){
             elements++;
             break;
