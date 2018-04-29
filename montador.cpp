@@ -7,7 +7,7 @@ using namespace std;
 ifstream file;
 map <string, int> table;
 map <string, int>::iterator it;
-int ILC=0;
+int ILC=0, elements=0;
 
 bool pass_one(){
     string line;
@@ -16,17 +16,22 @@ bool pass_one(){
 
     for(int i=0; i<line.length(); i++) {
         if(line[i]=='_'){ //Label
-            table.insert(make_pair(line.substr(line.find('_'),line.find(':')), ILC));
-            break;
+            string line_sub=line.substr(line.find('_'),line.find(':'));
+            table.insert(make_pair(line_sub, ILC));
+            i+=line_sub.length();
         }
 
         else if(line[i]==';') break;
 
-        else {
-            ILC+=INS_SIZE;
+        else if(line[i]>=97 && line[i]<=122){
+            elements++;
             break;
         }
+    }
 
+    if(elements){
+        elements=0;
+        ILC+=INS_SIZE;
     }
 
     return true;
