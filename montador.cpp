@@ -214,7 +214,9 @@ int pass_two(){
         //Realiza Desvio e pega os valores do .data (num_bytes e endereço)
         if(token[0]=='_' && n==1) continue;
         else if(token[0]=='_' && n>1){
-            ifstream file2;
+
+
+           /* ifstream file2;
             string line2, token2, num_bytes, endereco;
             size_t pos2;
             int n2=0;
@@ -231,7 +233,7 @@ int pass_two(){
 
             }
             cout << num_bytes << ' ' << endereco << endl;
-            file2.close();
+            file2.close();*/
         }
         //codigo de maquina das instruções
         else if(token=="stop") traducao=STOP;
