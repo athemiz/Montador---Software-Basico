@@ -1,4 +1,4 @@
-_start:	read A0	
+_start: read A0	
     add A1 A0 ;comenatio
 _L3: read A0	
     add A1 A0 ;comenatio
@@ -7,7 +7,7 @@ _L1:   read A0
     add A1 A0 ;comenatio
 _L0: read A0	
     add A1 A0 ;comenatio
-_L2:read A0	
+_L2: read A0	
     add A1 A0 ;comenatio
 _done: stop
 _teste: .data 8 20
