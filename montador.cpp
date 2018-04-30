@@ -124,28 +124,28 @@ string GetHexFromBin(string sBinary)
 bool pass_one(){
     string line;
 
-    if(!getline(file, line)) return false;
+    if(!getline(file, line)) return false; //Le a linha
 
     for(int i=0; i<line.length(); i++) {
         if(line[i]=='_'){ //Label
-            string line_sub=line.substr(line.find('_'),line.find(':'));
-            table.insert(make_pair(line_sub, ILC));
+            string line_sub=line.substr(line.find('_'),line.find(':')); //Remove '_' e ':'
+            table.insert(make_pair(line_sub, ILC)); //adiciona na tabela hash
             i+=line_sub.length();
         }
 
-        else if(line[i]==';') break;
+        else if(line[i]==';') break; //Se for um commentario pare
 
 
         /*Partindo do pressuposto de que não haverão erros no arquivo de entrada então este if deve funcionar para reconhecer os comandos*/
-        else if(line[i]>=97 && line[i]<=122){
-            elements++;
+        else if(line[i]>=97 && line[i]<=122){ //Caso encontre algum caracter de a-z
+            elements++; //Encontro uma instrução
             break;
         }
     }
 
-    if(elements){
-        elements=0;
-        ILC++;
+    if(elements){ //Caso tenha encontrado uma instrução
+        elements=0; //Faça a variavel Falsa
+        ILC++; //Incremente o intruction location counter
     }
 
     return true;
@@ -158,7 +158,7 @@ int pass_two(){
     int n=0;
 
     if(!getline(file, line)) {
-        while(address<128) {
+        while(address<128) { // Imprimi os hex que estão faltando
             stringstream sstream;
             sstream << hex << address;
             string temp = sstream.str();
@@ -169,20 +169,19 @@ int pass_two(){
             cout << ":01" << result << "0000" << endl;
             address++;
         }
-        cout << ":00000001FF" << endl;
+        cout << ":00000001FF" << endl; //Imprimi end of file
         return false;
     }
 
-    while (pos != EOF) {
-        pos = line.find(' ');
-        if(pos==-1)  pos = line.find(EOF);
+    while (pos != EOF) { //Enquanto não chegou no fim da linha
+        pos = line.find(' '); //separa as palavras aonde tem espaço ' '
+        if(pos==-1)  pos = line.find(EOF); //Se não encontra mais espaço procure o fim da linha
         n++;
-        token = line.substr(0, pos);
-        //if(token.length())cout << token << endl;
-        line.erase(0, pos + 1);
+        token = line.substr(0, pos); //Pega uma palavra da linha
+        line.erase(0, pos + 1); //Apaga a palavra pra continuar iterando
 
 
-        //Desvio
+        //Realiza Desvio e pega os valores do .data (num_bytes e endereço)
         if(token[0]=='_' && n==1) continue;
         else if(token[0]=='_' && n>1){
             ifstream file2;
@@ -191,7 +190,6 @@ int pass_two(){
             int n2=0;
             file2.open(f_name);
             for(int i=0; i<=table[token.substr(token.find('_'),token.find(':'))]; i++) getline(file2, line2);
-            //cout << line2 << endl;
             while (pos2!=EOF) {
                 pos2 = line2.find(' ');
                 if(pos2==-1)  pos2 = line2.find(EOF);
@@ -205,6 +203,7 @@ int pass_two(){
             cout << num_bytes << ' ' << endereco << endl;
             file2.close();
         }
+        //codigo de maquina das instruções
         else if(token=="stop") traducao=STOP;
         else if(token=="load") traducao=LOAD;
         else if(token=="store") traducao=STORE;
@@ -228,21 +227,24 @@ int pass_two(){
         else if(token=="loadi") traducao=LOADI;
         else if(token=="storei") traducao=STOREI;
         else if(token=="copytop") traducao=COPYTOP;
+        //concatena o codigo das instruções com dos operandos registradores
         else if(token=="A0") traducao+=A0;
         else if(token=="A1") traducao+=A1;
         else if(token=="A2") traducao+=A2;
         else if(token=="A3") traducao+=A3;
     }
-
+    //transforma int em hexadecimal
     stringstream sstream;
     sstream << hex << address;
     string temp = sstream.str();
     string result;
 
+    //Adiciona '0s' a esquerda para completar 4 caracteres
     while(result.length()<4-temp.length()) result+='0';
 
     result+=temp;
 
+    //Imprime o resultado
     if(traducao.length()<8) {
         while(traducao.length()<8) traducao+='0';
         cout << ":01" << result << "00" << GetHexFromBin(traducao) << endl;
