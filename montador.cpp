@@ -1,8 +1,35 @@
-/*Aparentemente a passada 1 já está funcionando corretamente*/
-
 #include <bits/stdc++.h>
 
 #define INS_SIZE 16
+
+#define A0 00
+#define A1 01
+#define A2 10
+#define A3 11
+
+#define 00000 STOP
+#define 00001 LOAD
+#define 00010 STORE
+#define 00011 READ
+#define 00100 WRITE
+#define 00101 ADD
+#define 00110 SUBTRACT
+#define 00111 MULTIPLY
+#define 01000 DIVIDE
+#define 01001 JUMP
+#define 01010 JMPZ
+#define 01011 JMPN
+#define 01100 MOVE
+#define 01101 PUSH
+#define 01110 POP
+#define 01111 CALL
+#define 1000000000000000 RETURN
+#define 10001 LOAD_S
+#define 10010 STORE_S
+#define 10011 LOADC
+#define 10100 LOADI
+#define 10101 STOREI
+#define 10110 COPYTOP
 
 using namespace std;
 
@@ -41,13 +68,18 @@ bool pass_one(){
     return true;
 }
 
-void pass_two(){
+int pass_two(){
+
+    return false;
 }
 
 int main(int argc, char *argv[]){
     file.open(argv[1]);
 
     while(pass_one());
+    file.close();
+    file.open(argv[1]);
+    while(pass_two);
 
     for(it=table.begin(); it!=table.end(); it++)
         cout << it->first << ' ' << it->second << endl;
