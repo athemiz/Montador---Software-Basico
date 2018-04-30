@@ -2,10 +2,10 @@
 
 #define INS_SIZE 16
 
-#define A0 00
-#define A1 01
-#define A2 10
-#define A3 11
+#define A0 "00"
+#define A1 "01"
+#define A2 "10"
+#define A3 "11"
 
 #define STOP "00000"
 #define LOAD "00001"
