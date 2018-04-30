@@ -38,6 +38,87 @@ map <string, int> table;
 map <string, int>::iterator it;
 int ILC=0, elements=0;
 
+char* f_name;
+
+string GetHexFromBin(string sBinary)
+{
+	string rest,tmp;
+
+	for (int i=0;i<sBinary.length();i+=4)
+	{
+		tmp = sBinary.substr(i,4);
+		if (!tmp.compare("0000"))
+		{
+			rest = rest + "0";
+		}
+		else if (!tmp.compare("0001"))
+		{
+			rest = rest + "1";
+		}
+		else if (!tmp.compare("0010"))
+		{
+			rest = rest + "2";
+		}
+		else if (!tmp.compare("0011"))
+		{
+			rest = rest + "3";
+		}
+		else if (!tmp.compare("0100"))
+		{
+			rest = rest + "4";
+		}
+		else if (!tmp.compare("0101"))
+		{
+			rest = rest + "5";
+		}
+		else if (!tmp.compare("0110"))
+		{
+			rest = rest + "6";
+		}
+		else if (!tmp.compare("0111"))
+		{
+			rest = rest + "7";
+		}
+		else if (!tmp.compare("1000"))
+		{
+			rest = rest + "8";
+		}
+		else if (!tmp.compare("1001"))
+		{
+			rest = rest + "9";
+		}
+		else if (!tmp.compare("1010"))
+		{
+			rest = rest + "A";
+		}
+		else if (!tmp.compare("1011"))
+		{
+			rest = rest + "B";
+		}
+		else if (!tmp.compare("1100"))
+		{
+			rest = rest + "C";
+		}
+		else if (!tmp.compare("1101"))
+		{
+			rest = rest + "D";
+		}
+		else if (!tmp.compare("1110"))
+		{
+			rest = rest + "E";
+		}
+		else if (!tmp.compare("1111"))
+		{
+			rest = rest + "F";
+		}
+		else
+		{
+			continue;
+		}
+	}
+	return rest;
+}
+
 bool pass_one(){
     string line;
 
@@ -62,25 +143,86 @@ bool pass_one(){
 
     if(elements){
         elements=0;
-        ILC+=INS_SIZE;
+        ILC++;
     }
 
     return true;
 }
 
 int pass_two(){
+    string line, token, traducao;
+    size_t pos=0;
+    int n=0;
 
-    return false;
+    if(!getline(file, line)) return false;
+
+    while ((pos = line.find(' ')) != -1) {
+        n++;
+        token = line.substr(0, pos);
+        //if(token.length())cout << token << endl;
+        line.erase(0, pos + 1);
+
+        if(token[0]=='_' && n==1) continue;
+        else if(token[0]=='_' && n>1){
+            //ifstream file2;
+            //string line2;
+            //file2.open(f_name);
+            //for(int i=0; i<table[token.substr(token.find('_'),token.find(':'))]; i++) getline(file2, line2);
+            continue;
+        }
+        else if(token=="stop") traducao=STOP;
+        else if(token=="load") traducao=LOAD;
+        else if(token=="store") traducao=STORE;
+        else if(token=="read") traducao=READ;
+        else if(token=="write") traducao=WRITE;
+        else if(token=="add") traducao=ADD;
+        else if(token=="subtract") traducao=SUBTRACT;
+        else if(token=="multiply") traducao=MULTIPLY;
+        else if(token=="divide") traducao=DIVIDE;
+        else if(token=="jump") traducao=JUMP;
+        else if(token=="jmpz") traducao=JMPZ;
+        else if(token=="jmpn") traducao=JMPN;
+        else if(token=="move") traducao=MOVE;
+        else if(token=="push") traducao=PUSH;
+        else if(token=="pop") traducao=POP;
+        else if(token=="call") traducao=CALL;
+        else if(token=="return") traducao=RETURN;
+        else if(token=="load_s") traducao=LOAD_S;
+        else if(token=="store_s") traducao=STORE_S;
+        else if(token=="loadc") traducao=LOADC;
+        else if(token=="loadi") traducao=LOADI;
+        else if(token=="storei") traducao=STOREI;
+        else if(token=="copytop") traducao=COPYTOP;
+        else if(token=="A0") traducao+=A0;
+        else if(token=="A1") traducao+=A1;
+        else if(token=="A2") traducao+=A2;
+        else if(token=="A3") traducao+=A3;
+    }
+
+    if(traducao.length()<8) {
+        while(traducao.length()<8) traducao+='0';
+        cout << GetHexFromBin(traducao) << endl;
+    }
+    else if(traducao.length()>8) {
+        cout << GetHexFromBin(traducao.substr(0,8)) << endl;
+        while(traducao.length()<16) traducao+='0';
+        cout << GetHexFromBin(traducao.substr(8,16)) << endl;
+    }
+
+
+    return true;
 }
 
 int main(int argc, char *argv[]){
-    file.open(argv[1]);
+    f_name=argv[1];
+    file.open(f_name);
+
 
     while(pass_one());
     file.close();
     file.open(argv[1]);
-    while(pass_two);
+    while(pass_two());
 
-    for(it=table.begin(); it!=table.end(); it++)
-        cout << it->first << ' ' << it->second << endl;
+    /*for(it=table.begin(); it!=table.end(); it++)
+        cout << it->first << ' ' << it->second << endl;*/
 }
