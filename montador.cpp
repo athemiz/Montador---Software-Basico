@@ -40,6 +40,35 @@ int ILC=0, elements=0, address=0;
 
 char* f_name;
 
+//Transforma string hexadecimal em decimal
+int hexToDecimal(string hexa)
+{
+    int x;
+    stringstream ss;
+    ss << hex << hexa;
+    ss >> x;
+
+    return x;
+}
+
+//Transforma decimal string hexadecimal
+string decimalToHex(int decimal)
+{
+    stringstream sstream;
+    sstream << hex << decimal;
+    string temp = sstream.str();
+    return temp;
+}
+
+//Realiza CheckSum
+string checkSum(string toCheck){
+    int result=0;
+    for(int i=1; i<11; i+=2){
+        result+=hexToDecimal(toCheck.substr(i, 2));
+    }
+    return decimalToHex(256-result);
+}
+
 //Transforma string binaria em hexadecimal
 string GetHexFromBin(string sBinary)
 {
@@ -166,7 +195,8 @@ int pass_two(){
 
             while(result.length()<4-temp.length()) result+='0';
             result+=temp;
-            cout << ":01" << result << "0000" << endl;
+            string toCheck = ":01" + result + "0000";
+            cout << toCheck << checkSum(toCheck) << endl;
             address++;
         }
         cout << ":00000001FF" << endl; //Imprimi end of file
@@ -232,11 +262,10 @@ int pass_two(){
         else if(token=="A1") traducao+=A1;
         else if(token=="A2") traducao+=A2;
         else if(token=="A3") traducao+=A3;
+        //else posição de memoria direta
     }
-    //transforma int em hexadecimal
-    stringstream sstream;
-    sstream << hex << address;
-    string temp = sstream.str();
+
+    string temp = decimalToHex(address);
     string result;
 
     //Adiciona '0s' a esquerda para completar 4 caracteres
@@ -247,14 +276,30 @@ int pass_two(){
     //Imprime o resultado
     if(traducao.length()<8) {
         while(traducao.length()<8) traducao+='0';
-        cout << ":01" << result << "00" << GetHexFromBin(traducao) << endl;
+        string toCheck = ":01" + result + "00" + GetHexFromBin(traducao);
+        cout << toCheck << checkSum(toCheck) << endl;
+        address++;
+
+        temp = decimalToHex(address);
+        result="";
+        while(result.length()<4-temp.length()) result+='0';
+        result+=temp;
+        toCheck = ":01" + result + "0000";
+        cout << toCheck + checkSum(toCheck) << endl;
         address++;
     }
     else if(traducao.length()>8) {
-        cout << ":01" << result << "00" << GetHexFromBin(traducao.substr(0,8)) << endl;
+        string toCheck = ":01" + result + "00" + GetHexFromBin(traducao.substr(0,8));
+        cout << toCheck << checkSum(toCheck) << endl;
         address++;
+
+        temp = decimalToHex(address);
+        result="";
+        while(result.length()<4-temp.length()) result+='0';
+        result+=temp;
         while(traducao.length()<16) traducao+='0';
-        cout << ":01" << result << "00" << GetHexFromBin(traducao.substr(8,16)) << endl;
+        toCheck = ":01" + result + "00" + GetHexFromBin(traducao.substr(8,16));
+        cout << toCheck << checkSum(toCheck) << endl;
         address++;
     }
 
