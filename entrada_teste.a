@@ -1,24 +1,13 @@
-_start:	
-    read A0	
+_start:	read A0	
     add A1 A0 ;comenatio
-    ;comentario
-_L3:	
-    read A0	
+_L3: read A0	
     add A1 A0 ;comenatio
     add A1 A0 ;comenatio
-    ;comentario
-_L1:	
-    read A0	
+_L1:   read A0	
     add A1 A0 ;comenatio
-    ;comentario
 _L0: read A0	
     add A1 A0 ;comenatio
-    ;comentario
-
 _L2:read A0	
     add A1 A0 ;comenatio
-    ;comentario
-
 _done: stop
-
 _teste: .data 8 20
