@@ -34,9 +34,11 @@
 using namespace std;
 
 ifstream file;
-map <string, int> table;
+map <string, int> table; //Tabela de rotulos
 map <string, int>::iterator it;
 int ILC=0, elements=0, address=0;
+
+vector<string> memoria; //vetor que possui todas as instruções .hex
 
 char* f_name;
 
@@ -196,10 +198,11 @@ int pass_two(){
             while(result.length()<4-temp.length()) result+='0';
             result+=temp;
             string toCheck = ":01" + result + "0000";
-            cout << toCheck << checkSum(toCheck) << endl;
+            memoria.push_back(toCheck+checkSum(toCheck));
             address++;
         }
-        cout << ":00000001FF" << endl; //Imprimi end of file
+        //cout << ":00000001FF" << endl; //Imprimi end of file
+        memoria.push_back(":00000001FF");
         return false;
     }
 
@@ -279,7 +282,7 @@ int pass_two(){
     if(traducao.length()<8) {
         while(traducao.length()<8) traducao+='0';
         string toCheck = ":01" + result + "00" + GetHexFromBin(traducao);
-        cout << toCheck << checkSum(toCheck) << endl;
+        memoria.push_back(toCheck+checkSum(toCheck));
         address++;
 
         temp = decimalToHex(address);
@@ -287,12 +290,12 @@ int pass_two(){
         while(result.length()<4-temp.length()) result+='0';
         result+=temp;
         toCheck = ":01" + result + "0000";
-        cout << toCheck + checkSum(toCheck) << endl;
+        memoria.push_back(toCheck+checkSum(toCheck));
         address++;
     }
     else if(traducao.length()>8) {
         string toCheck = ":01" + result + "00" + GetHexFromBin(traducao.substr(0,8));
-        cout << toCheck << checkSum(toCheck) << endl;
+        memoria.push_back(toCheck+checkSum(toCheck));
         address++;
 
         temp = decimalToHex(address);
@@ -301,7 +304,7 @@ int pass_two(){
         result+=temp;
         while(traducao.length()<16) traducao+='0';
         toCheck = ":01" + result + "00" + GetHexFromBin(traducao.substr(8,16));
-        cout << toCheck << checkSum(toCheck) << endl;
+        memoria.push_back(toCheck+checkSum(toCheck));
         address++;
     }
 
@@ -318,6 +321,10 @@ int main(int argc, char *argv[]){
     file.open(argv[1]);
     while(pass_two());
 
+    //Imptime tabela de rotulos
    /* for(it=table.begin(); it!=table.end(); it++)
         cout << it->first << ' ' << "ILC: " << it->second << endl;*/
+
+    //Imprime memoria
+    //for(int i=0; i<memoria.size(); i++) cout << memoria[i] <<endl;
 }
