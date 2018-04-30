@@ -1,7 +1,7 @@
-_L0 Linha: 7 Endereco: 112
-_L1 Linha: 5 Endereco: 80
-_L2 Linha: 9 Endereco: 144
-_L3 Linha: 2 Endereco: 32
-_done Linha: 12 Endereco: 192
-_start Linha: 0 Endereco: 0
-_teste Linha: 13 Endereco: 208
+_L0 ILC: 14
+_L1 ILC: 10
+_L2 ILC: 18
+_L3 ILC: 4
+_done ILC: 24
+_start ILC: 0
+_teste ILC: 26
