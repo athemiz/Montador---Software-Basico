@@ -36,10 +36,11 @@ using namespace std;
 ifstream file;
 map <string, int> table;
 map <string, int>::iterator it;
-int ILC=0, elements=0;
+int ILC=0, elements=0, address=0;
 
 char* f_name;
 
+//Transforma string binaria em hexadecimal
 string GetHexFromBin(string sBinary)
 {
 	string rest,tmp;
@@ -119,6 +120,7 @@ string GetHexFromBin(string sBinary)
 	return rest;
 }
 
+//Realiza a primeira passada
 bool pass_one(){
     string line;
 
@@ -149,26 +151,59 @@ bool pass_one(){
     return true;
 }
 
+//Realiza a segunda passada
 int pass_two(){
     string line, token, traducao;
     size_t pos=0;
     int n=0;
 
-    if(!getline(file, line)) return false;
+    if(!getline(file, line)) {
+        while(address<128) {
+            stringstream sstream;
+            sstream << hex << address;
+            string temp = sstream.str();
+            string result;
 
-    while ((pos = line.find(' ')) != -1) {
+            while(result.length()<4-temp.length()) result+='0';
+            result+=temp;
+            cout << ":01" << result << "0000" << endl;
+            address++;
+        }
+        cout << ":00000001FF" << endl;
+        return false;
+    }
+
+    while (pos != EOF) {
+        pos = line.find(' ');
+        if(pos==-1)  pos = line.find(EOF);
         n++;
         token = line.substr(0, pos);
         //if(token.length())cout << token << endl;
         line.erase(0, pos + 1);
 
+
+        //Desvio
         if(token[0]=='_' && n==1) continue;
         else if(token[0]=='_' && n>1){
-            //ifstream file2;
-            //string line2;
-            //file2.open(f_name);
-            //for(int i=0; i<table[token.substr(token.find('_'),token.find(':'))]; i++) getline(file2, line2);
-            continue;
+            ifstream file2;
+            string line2, token2, num_bytes, endereco;
+            size_t pos2;
+            int n2=0;
+            file2.open(f_name);
+            for(int i=0; i<=table[token.substr(token.find('_'),token.find(':'))]; i++) getline(file2, line2);
+            //cout << line2 << endl;
+            while (pos2!=EOF) {
+                pos2 = line2.find(' ');
+                if(pos2==-1)  pos2 = line2.find(EOF);
+                token2 = line2.substr(0, pos2);
+                line2.erase(0, pos2 + 1);
+                if(token2.length()) n2++;
+                if(n2==3) num_bytes=token2;
+                if(n2==4) endereco=token2;
+
+            }
+            cout << num_bytes << ' ' << endereco << endl;
+            file2.close();
         }
         else if(token=="stop") traducao=STOP;
         else if(token=="load") traducao=LOAD;
@@ -199,16 +234,27 @@ int pass_two(){
         else if(token=="A3") traducao+=A3;
     }
 
+    stringstream sstream;
+    sstream << hex << address;
+    string temp = sstream.str();
+    string result;
+
+    while(result.length()<4-temp.length()) result+='0';
+
+    result+=temp;
+
     if(traducao.length()<8) {
         while(traducao.length()<8) traducao+='0';
-        cout << GetHexFromBin(traducao) << endl;
+        cout << ":01" << result << "00" << GetHexFromBin(traducao) << endl;
+        address++;
     }
     else if(traducao.length()>8) {
-        cout << GetHexFromBin(traducao.substr(0,8)) << endl;
+        cout << ":01" << result << "00" << GetHexFromBin(traducao.substr(0,8)) << endl;
+        address++;
         while(traducao.length()<16) traducao+='0';
-        cout << GetHexFromBin(traducao.substr(8,16)) << endl;
+        cout << ":01" << result << "00" << GetHexFromBin(traducao.substr(8,16)) << endl;
+        address++;
     }
-
 
     return true;
 }
