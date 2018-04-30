@@ -174,7 +174,7 @@ bool pass_one(){
 
     if(elements){ //Caso tenha encontrado uma instrução
         elements=0; //Faça a variavel Falsa
-        ILC++; //Incremente o intruction location counter
+        ILC+=2; //Incremente o intruction location counter
     }
 
     return true;
@@ -318,6 +318,6 @@ int main(int argc, char *argv[]){
     file.open(argv[1]);
     while(pass_two());
 
-    /*for(it=table.begin(); it!=table.end(); it++)
-        cout << it->first << ' ' << "Linha: " << it->second << " Endereco: " << it->second*16<< endl;*/
+   /* for(it=table.begin(); it!=table.end(); it++)
+        cout << it->first << ' ' << "ILC: " << it->second << endl;*/
 }
