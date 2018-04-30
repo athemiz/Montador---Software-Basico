@@ -317,5 +317,5 @@ int main(int argc, char *argv[]){
     while(pass_two());
 
     /*for(it=table.begin(); it!=table.end(); it++)
-        cout << it->first << ' ' << it->second << endl;*/
+        cout << it->first << ' ' << "Linha: " << it->second << " Endereco: " << it->second*16<< endl;*/
 }
