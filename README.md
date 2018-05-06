@@ -29,9 +29,9 @@ DIVIDE = Nao implementada
 
 JUMP = Aparentemente Funcionando
 
-JMPZ = Nao implementada
+JMPZ = Aparentemente Funcionando
 
-JMPN = Nao implementada
+JMPN = Aparentemente Funcionando
 
 MOVE = Aparentemente Funcionando
 
