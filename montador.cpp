@@ -16,7 +16,7 @@
 #define SUBTRACT "00110"
 #define MULTIPLY "00111"
 #define DIVIDE "01000"
-#define JUMP "01001"
+#define JUMP "01001000"
 #define JMPZ "01010"
 #define JMPN "01011"
 #define MOVE "01100"
@@ -151,6 +151,17 @@ string GetHexFromBin(string sBinary)
 	return rest;
 }
 
+string DecToBin(int number)
+{
+    if ( number == 0 ) return "0";
+    if ( number == 1 ) return "1";
+
+    if ( number % 2 == 0 )
+        return DecToBin(number / 2) + "0";
+    else
+        return DecToBin(number / 2) + "1";
+}
+
 //Realiza a primeira passada
 bool pass_one(){
     string line;
@@ -216,28 +227,8 @@ int pass_two(){
 
         //Realiza Desvio e pega os valores do .data (num_bytes e endereço)
         if(token[0]=='_' && n==1) continue;
-        else if(token[0]=='_' && n>1){
-
-
-           /* ifstream file2;
-            string line2, token2, num_bytes, endereco;
-            size_t pos2;
-            int n2=0;
-            file2.open(f_name);
-            for(int i=0; i<=table[token.substr(token.find('_'),token.find(':'))]; i++) getline(file2, line2);
-            while (pos2!=EOF) {
-                pos2 = line2.find(' ');
-                if(pos2==-1)  pos2 = line2.find(EOF);
-                token2 = line2.substr(0, pos2);
-                line2.erase(0, pos2 + 1);
-                if(token2.length()) n2++;
-                if(n2==3) num_bytes=token2;
-                if(n2==4) endereco=token2;
-
-            }
-            cout << num_bytes << ' ' << endereco << endl;
-            file2.close();*/
-        }
+        //Concatena com desvio
+        else if(token[0]=='_' && n>1) traducao+=DecToBin(table[token]);
         //codigo de maquina das instruções
         else if(token=="stop") traducao=STOP;
         else if(token=="load") traducao=LOAD;
@@ -270,6 +261,8 @@ int pass_two(){
         //else posição de memoria direta
     }
 
+    cout << "T: " << traducao << endl;
+
     string temp = decimalToHex(address);
     string result;
 
@@ -279,7 +272,7 @@ int pass_two(){
     result+=temp;
 
     //Imprime o resultado
-    if(traducao.length()<8) {
+    if(traducao.length()<=8) {
         while(traducao.length()<8) traducao+='0';
         string toCheck = ":01" + result + "00" + GetHexFromBin(traducao);
         memoria.push_back(toCheck+checkSum(toCheck));
@@ -298,12 +291,15 @@ int pass_two(){
         memoria.push_back(toCheck+checkSum(toCheck));
         address++;
 
+        traducao=traducao.substr(8,traducao.length());
         temp = decimalToHex(address);
         result="";
         while(result.length()<4-temp.length()) result+='0';
         result+=temp;
-        while(traducao.length()<16) traducao+='0';
-        toCheck = ":01" + result + "00" + GetHexFromBin(traducao.substr(8,16));
+        string traducao_1="";
+        while(traducao_1.length() + traducao.length()<8) traducao_1+='0';
+        traducao_1+=traducao;
+        toCheck = ":01" + result + "00" + GetHexFromBin(traducao_1);
         memoria.push_back(toCheck+checkSum(toCheck));
         address++;
     }
@@ -315,16 +311,15 @@ int main(int argc, char *argv[]){
     f_name=argv[1];
     file.open(f_name);
 
-
     while(pass_one());
     file.close();
     file.open(argv[1]);
     while(pass_two());
 
     //Imptime tabela de rotulos
-   /* for(it=table.begin(); it!=table.end(); it++)
+    /*for(it=table.begin(); it!=table.end(); it++)
         cout << it->first << ' ' << "ILC: " << it->second << endl;*/
 
     //Imprime memoria
-    //for(int i=0; i<memoria.size(); i++) cout << memoria[i] <<endl;
+    for(int i=0; i<memoria.size(); i++) cout << memoria[i] <<endl;
 }
