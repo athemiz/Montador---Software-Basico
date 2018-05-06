@@ -35,9 +35,9 @@ JMPN = Aparentemente Funcionando
 
 MOVE = Aparentemente Funcionando
 
-PUSH = Nao implementada
+PUSH = Aparentemente Funcionando
 
-POP = Nao implementada
+POP = Aparentemente Funcionando
 
 CALL = Nao implementada
 
