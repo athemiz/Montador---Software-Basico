@@ -21,11 +21,11 @@ WRITE = Nao implementada
 
 ADD = Aparentemente Funcionando
 
-SUBTRACT = Nao implementada
+SUBTRACT = Aparentemente Funcionando
 
-MULTIPLY = Nao implementada
+MULTIPLY = Aparentemente Funcionando
 
-DIVIDE = Nao implementada
+DIVIDE = Aparentemente Funcionando
 
 JUMP = Aparentemente Funcionando
 
