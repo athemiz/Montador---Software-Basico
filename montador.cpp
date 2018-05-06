@@ -341,9 +341,39 @@ int pass_two(){
         traducao_2="000000"+instrucao[2];
         criaHex(traducao_2, endereco);
     }
-    //else if(!instrucao[0].compare(SUBTRACT)) instrucao.push_back(SUBTRACT);
-    //else if(!instrucao[0].compare(MULTIPLY)) instrucao.push_back(MULTIPLY);
-    //else if(!instrucao[0].compare(DIVIDE)) instrucao.push_back(DIVIDE);
+    else if(!instrucao[0].compare(SUBTRACT)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2="000000"+instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
+    else if(!instrucao[0].compare(MULTIPLY)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2="000000"+instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
+    else if(!instrucao[0].compare(DIVIDE)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2="000000"+instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
     else if(!instrucao[0].compare(JUMP)) {
         endereco=formataAddress();
 
