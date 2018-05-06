@@ -11,46 +11,46 @@ Passo 2 - O que possivelmente está faltando: 30/04 13:46
   
 STOP = Aparentemente Funcionando
 
-LOAD
+LOAD = Nao implementada
 
 STORE = Nao implementada
 
 READ = Aparentemente Funcionando
 
-WRITE
+WRITE = Nao implementada
 
 ADD = Aparentemente Funcionando
 
-SUBTRACT
+SUBTRACT = Nao implementada
 
-MULTIPLY
+MULTIPLY = Nao implementada
 
-DIVIDE
+DIVIDE = Nao implementada
 
 JUMP = Aparentemente Funcionando
 
-JMPZ
+JMPZ = Nao implementada
 
-JMPN
+JMPN = Nao implementada
 
 MOVE = Nao implementada
 
-PUSH
+PUSH = Nao implementada
 
-POP
+POP = Nao implementada
 
-CALL
+CALL = Nao implementada
 
 RETURN
 
-LOAD_S
+LOAD_S = Nao implementada
 
-STORE_S
+STORE_S = Nao implementada
 
-LOADC
+LOADC = Nao implementada
 
-LOADI
+LOADI = Nao implementada
 
-STOREI 
+STOREI  = Nao implementada
 
-COPYTOP 
+COPYTOP  = Nao implementada
