@@ -13,7 +13,7 @@ STOP = Aparentemente Funcionando
 
 LOAD
 
-STORE = Aparentemente Funcionando
+STORE = Nao implementada
 
 READ = Aparentemente Funcionando
 
