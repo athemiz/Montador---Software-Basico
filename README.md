@@ -55,4 +55,4 @@ STOREI  = Aparentemente Funcionando
 
 COPYTOP  = Aparentemente Funcionando
 
-.DATA = Nao Implementada
+.DATA = Aparentemente Funcionando
