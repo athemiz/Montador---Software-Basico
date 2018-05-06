@@ -33,7 +33,7 @@ JMPZ
 
 JMPN
 
-MOVE = Aparentemente Funcionando
+MOVE = Nao implementada
 
 PUSH
 
