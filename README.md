@@ -39,9 +39,9 @@ PUSH = Aparentemente Funcionando
 
 POP = Aparentemente Funcionando
 
-CALL = Nao implementada
+CALL = Aparentemente Funcionando
 
-RETURN = Nao implementada
+RETURN = Aparentemente Funcionando
 
 LOAD_S = Aparentemente Funcionando
 
