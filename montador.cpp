@@ -38,7 +38,7 @@ map <string, int> table; //Tabela de rotulos
 map <string, int>::iterator it;
 int ILC=0, elements=0, address=0;
 
-vector<string> memoria; //vetor que possui todas as instruções .hex
+vector<string> memoria; //vetor que possui todas as instruções da memoria .hex
 vector<string> instrucao; //vetor para manipular instrucao
 
 char* f_name;
@@ -436,8 +436,28 @@ int pass_two(){
         traducao_2="000000"+instrucao[2];
         criaHex(traducao_2, endereco);
     }
-    //else if(!instrucao[0].compare(PUSH)) instrucao.push_back(PUSH);
-    //else if(!instrucao[0].compare(POP)) instrucao.push_back(POP);
+    else if(!instrucao[0].compare(PUSH)) {
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+"000";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2="000000"+instrucao[1];
+        criaHex(traducao_2, endereco);
+    }
+    else if(!instrucao[0].compare(POP)) {
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+"000";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2="000000"+instrucao[1];
+        criaHex(traducao_2, endereco);
+    }
     //else if(!instrucao[0].compare(CALL)) instrucao.push_back(CALL);
     //else if(!instrucao[0].compare(RETURN)) instrucao.push_back(RETURN);
     //else if(!instrucao[0].compare(LOAD_S)) instrucao.push_back(LOAD_S);
