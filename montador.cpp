@@ -362,38 +362,6 @@ int pass_two(){
     else if(instrucao[0].compare("storei")) instrucao.push_back(STOREI);
     else if(instrucao[0].compare("copytop")) instrucao.push_back(COPYTOP);*/
 
-    //Imprime o resultado
-    /*if(traducao.length()<=8) {
-        while(traducao.length()<8) traducao+='0';
-        string toCheck = ":01" + result + "00" + GetHexFromBin(traducao);
-        memoria.push_back(toCheck+checkSum(toCheck));
-        address++;
-
-        temp = decimalToHex(address);
-        result="";
-        while(result.length()<4-temp.length()) result+='0';
-        result+=temp;
-        toCheck = ":01" + result + "0000";
-        memoria.push_back(toCheck+checkSum(toCheck));
-        address++;
-    }
-    else if(traducao.length()>8) {
-        string toCheck = ":01" + result + "00" + GetHexFromBin(traducao.substr(0,8));
-        memoria.push_back(toCheck+checkSum(toCheck));
-        address++;
-
-        traducao=traducao.substr(8,traducao.length());
-        temp = decimalToHex(address);
-        result="";
-        while(result.length()<4-temp.length()) result+='0';
-        result+=temp;
-        string traducao_1="";
-        while(traducao_1.length() + traducao.length()<8) traducao_1+='0';
-        traducao_1+=traducao;
-        toCheck = ":01" + result + "00" + GetHexFromBin(traducao_1);
-        memoria.push_back(toCheck+checkSum(toCheck));
-        address++;
-    }*/
     instrucao.clear();
 
     return true;
