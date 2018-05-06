@@ -30,13 +30,16 @@
 #define LOADI "10100"
 #define STOREI "10101"
 #define COPYTOP "10110"
+#define DATA "11111"
 
 using namespace std;
 
 ifstream file;
 map <string, int> table; //Tabela de rotulos
+typedef pair<string, int> p;
+vector <p> table_data; //Vetor usado pela .data
 map <string, int>::iterator it;
-int ILC=0, elements=0, address=0;
+int ILC=0, elements=0, address=0, data=126;
 
 vector<string> memoria; //vetor que possui todas as instruções da memoria .hex
 vector<string> instrucao; //vetor para manipular instrucao
@@ -69,7 +72,12 @@ string checkSum(string toCheck){
     for(int i=1; i<11; i+=2){
         result+=hexToDecimal(toCheck.substr(i, 2));
     }
-    return decimalToHex(256-result);
+    string resposta = decimalToHex(256-result);
+    if(resposta.length()<2){
+        string temp="0"+resposta;
+        resposta=temp;
+    }
+    return resposta;
 }
 
 //Transforma string binaria em hexadecimal
@@ -229,6 +237,9 @@ int pass_two(){
             address++;
         }
         //cout << ":00000001FF" << endl; //Imprimi end of file
+        for(int i=0; i<table_data.size(); i++){
+            memoria[table_data[i].second]=table_data[i].first;
+        }
         memoria.push_back(":00000001FF");
         return false;
     }
@@ -238,6 +249,7 @@ int pass_two(){
         if(pos==-1)  pos = line.find(EOF); //Se não encontra mais espaço procure o fim da linha
         n++;
         token = line.substr(0, pos); //Pega uma palavra da linha
+        cout << token << endl;
         line.erase(0, pos + 1); //Apaga a palavra pra continuar iterando
 
 
@@ -271,6 +283,7 @@ int pass_two(){
         else if(!token.compare("load_i")) instrucao.push_back(LOADI);
         else if(!token.compare("store_i")) instrucao.push_back(STOREI);
         else if(!token.compare("copytop")) instrucao.push_back(COPYTOP);
+        else if(!token.compare(".data")) instrucao.push_back(DATA);
         //concatena o codigo das instruções com dos operandos registradores
         else if(!token.compare("A0")) instrucao.push_back(A0);
         else if(!token.compare("A1")) instrucao.push_back(A1);
@@ -553,6 +566,21 @@ int pass_two(){
 
         traducao_2="000000"+instrucao[1];
         criaHex(traducao_2, endereco);
+    }
+    else if(!instrucao[0].compare(DATA)){
+        string a = decimalToHex(data);
+        endereco="";
+        while(endereco.length()<4-a.length()) endereco+='0';
+        endereco+=a;
+
+        string temp="";
+        while(temp.length()+instrucao[2].length()<8)temp+="0";
+        temp+=instrucao[2];
+        string toCheck=":01"+endereco+"00"+GetHexFromBin(temp);
+        traducao=toCheck+checkSum(toCheck);
+        table_data.push_back(make_pair(traducao, data));
+        data-=2;
+        cout<< temp << ' ' << GetHexFromBin(temp) <<endl;
     }
 
     instrucao.clear();
