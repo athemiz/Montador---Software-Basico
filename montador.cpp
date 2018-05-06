@@ -50,7 +50,6 @@ int hexToDecimal(string hexa)
     stringstream ss;
     ss << hex << hexa;
     ss >> x;
-
     return x;
 }
 
@@ -60,6 +59,7 @@ string decimalToHex(int decimal)
     stringstream sstream;
     sstream << hex << decimal;
     string temp = sstream.str();
+    transform(temp.begin(), temp.end(),temp.begin(), ::toupper);
     return temp;
 }
 
@@ -223,6 +223,7 @@ int pass_two(){
 
             while(result.length()<4-temp.length()) result+='0';
             result+=temp;
+            transform(result.begin(), result.end(),result.begin(), ::toupper);
             string toCheck = ":01" + result + "0000";
             memoria.push_back(toCheck+checkSum(toCheck));
             address++;
@@ -291,7 +292,19 @@ int pass_two(){
         traducao_2="00000000";
         criaHex(traducao_2, endereco);
     }
-   // else if(!instrucao[0].compare(LOAD)) instrucao.push_back(LOAD);
+    else if(!instrucao[0].compare(LOAD)) {
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2.clear();
+        while(traducao_2.length()+instrucao[2].length()<8) traducao_2+="0";
+        traducao_2+=instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
     else if(!instrucao[0].compare(STORE)) {
         endereco=formataAddress();
 
@@ -339,15 +352,37 @@ int pass_two(){
 
         endereco=formataAddress();
 
-        //if(instrucao[1]!="A0" && instrucao[1]!="A1" && instrucao[1]!="A2" && instrucao[1]!="A3") traducao_2="000000"+DecToBin(atoi(instrucao[1].c_str()));
-
         traducao_2.clear();
         while(traducao_2.length()+instrucao[1].length()<8) traducao_2+="0";
         traducao_2+=instrucao[1];
         criaHex(traducao_2, endereco);
     }
-    //else if(!instrucao[0].compare(JMPZ)) instrucao.push_back(JMPZ);
-    //else if(!instrucao[0].compare(JMPN)) instrucao.push_back(JMPN);
+    else if(!instrucao[0].compare(JMPZ)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2.clear();
+        while(traducao_2.length()+instrucao[2].length()<8) traducao_2+="0";
+        traducao_2+=instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
+    else if(!instrucao[0].compare(JMPN)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2.clear();
+        while(traducao_2.length()+instrucao[2].length()<8) traducao_2+="0";
+        traducao_2+=instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
     else if(!instrucao[0].compare(MOVE)) {
         endereco=formataAddress();
 
