@@ -291,7 +291,7 @@ int pass_two(){
         traducao_2="00000000";
         criaHex(traducao_2, endereco);
     }
-   // else if(instrucao[0].compare("load")) instrucao.push_back(LOAD);
+   // else if(!instrucao[0].compare(LOAD)) instrucao.push_back(LOAD);
     else if(!instrucao[0].compare(STORE)) {
         endereco=formataAddress();
 
@@ -316,7 +316,7 @@ int pass_two(){
         traducao_2="000000"+instrucao[1];
         criaHex(traducao_2, endereco);
     }
-    //else if(instrucao[0].compare("write")) instrucao.push_back(WRITE);
+    //else if(!instrucao[0].compare(WRITE)) instrucao.push_back(WRITE);
     else if(!instrucao[0].compare(ADD)){
         endereco=formataAddress();
 
@@ -328,9 +328,9 @@ int pass_two(){
         traducao_2="000000"+instrucao[2];
         criaHex(traducao_2, endereco);
     }
-    //else if(instrucao[0].compare("subtract")) instrucao.push_back(SUBTRACT);
-    //else if(instrucao[0].compare("multiply")) instrucao.push_back(MULTIPLY);
-    //else if(instrucao[0].compare("divide")) instrucao.push_back(DIVIDE);
+    //else if(!instrucao[0].compare(SUBTRACT)) instrucao.push_back(SUBTRACT);
+    //else if(!instrucao[0].compare(MULTIPLY)) instrucao.push_back(MULTIPLY);
+    //else if(!instrucao[0].compare(DIVIDE)) instrucao.push_back(DIVIDE);
     else if(!instrucao[0].compare(JUMP)) {
         endereco=formataAddress();
 
@@ -346,8 +346,8 @@ int pass_two(){
         traducao_2+=instrucao[1];
         criaHex(traducao_2, endereco);
     }
-    //else if(instrucao[0].compare("jmpz")) instrucao.push_back(JMPZ);
-    //else if(instrucao[0].compare("jmpn")) instrucao.push_back(JMPN);
+    //else if(!instrucao[0].compare(JMPZ)) instrucao.push_back(JMPZ);
+    //else if(!instrucao[0].compare(JMPN)) instrucao.push_back(JMPN);
     else if(!instrucao[0].compare(MOVE)) {
         endereco=formataAddress();
 
@@ -359,16 +359,16 @@ int pass_two(){
         traducao_2="000000"+instrucao[2];
         criaHex(traducao_2, endereco);
     }
-    /*else if(instrucao[0].compare("push")) instrucao.push_back(PUSH);
-    else if(instrucao[0].compare("pop")) instrucao.push_back(POP);
-    else if(instrucao[0].compare("call")) instrucao.push_back(CALL);
-    else if(instrucao[0].compare("return")) instrucao.push_back(RETURN);
-    else if(instrucao[0].compare("load_s")) instrucao.push_back(LOAD_S);
-    else if(instrucao[0].compare("store_s")) instrucao.push_back(STORE_S);
-    else if(instrucao[0].compare("loadc")) instrucao.push_back(LOADC);
-    else if(instrucao[0].compare("loadi")) instrucao.push_back(LOADI);
-    else if(instrucao[0].compare("storei")) instrucao.push_back(STOREI);
-    else if(instrucao[0].compare("copytop")) instrucao.push_back(COPYTOP);*/
+    /*else if(!instrucao[0].compare(PUSH)) instrucao.push_back(PUSH);
+    else if(!instrucao[0].compare(POP)) instrucao.push_back(POP);
+    else if(!instrucao[0].compare(CALL)) instrucao.push_back(CALL);
+    else if(!instrucao[0].compare(RETURN)) instrucao.push_back(RETURN);
+    else if(!instrucao[0].compare(LOAD_S)) instrucao.push_back(LOAD_S);
+    else if(!instrucao[0].compare(STORE_S)) instrucao.push_back(STORE_S);
+    else if(!instrucao[0].compare(LOADC)) instrucao.push_back(LOADC);
+    else if(!instrucao[0].compare(LOADI)) instrucao.push_back(LOADI);
+    else if(!instrucao[0].compare(STOREI)) instrucao.push_back(STOREI);
+    else if(!instrucao[0].compare(COPYTOP)) instrucao.push_back(COPYTOP);*/
 
     instrucao.clear();
 
