@@ -33,7 +33,7 @@ JMPZ = Nao implementada
 
 JMPN = Nao implementada
 
-MOVE = Nao implementada
+MOVE = Aparentemente Funcionando
 
 PUSH = Nao implementada
 
