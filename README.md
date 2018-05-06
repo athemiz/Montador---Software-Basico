@@ -11,7 +11,7 @@ Passo 2 - O que possivelmente está faltando: 30/04 13:46
   
 STOP = Aparentemente Funcionando
 
-LOAD = Nao implementada
+LOAD = Aparentemente Funcionando
 
 STORE = Aparentemente Funcionando
 
