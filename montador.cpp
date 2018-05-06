@@ -39,6 +39,7 @@ map <string, int>::iterator it;
 int ILC=0, elements=0, address=0;
 
 vector<string> memoria; //vetor que possui todas as instruções .hex
+vector<string> instrucao; //vetor para manipular instrucao
 
 char* f_name;
 
@@ -162,6 +163,21 @@ string DecToBin(int number)
         return DecToBin(number / 2) + "1";
 }
 
+void criaHex(string traducao, string posicao){
+    string toCheck = ":01" + posicao + "00" + GetHexFromBin(traducao);
+    memoria.push_back(toCheck+checkSum(toCheck));
+    address++;
+}
+
+string formataIncrementaAddress(){
+    string temp = decimalToHex(address);
+    string result="";
+    while(result.length()<4-temp.length()) result+='0';
+    result+=temp;
+    address++;
+    return result;
+}
+
 //Realiza a primeira passada
 bool pass_one(){
     string line;
@@ -195,7 +211,7 @@ bool pass_one(){
 
 //Realiza a segunda passada
 int pass_two(){
-    string line, token, traducao;
+    string line, token;
     size_t pos=0;
     int n=0;
 
@@ -228,51 +244,115 @@ int pass_two(){
         //Realiza Desvio e pega os valores do .data (num_bytes e endereço)
         if(token[0]=='_' && n==1) continue;
         //Concatena com desvio
-        else if(token[0]=='_' && n>1) traducao+=DecToBin(table[token]);
+        else if(token[0]=='_' && n>1) instrucao.push_back(DecToBin(table[token]));
+        //numero direto
+        else if(token[0]>=48 && token[0]<57) instrucao.push_back(DecToBin(atoi(token.c_str())));
         //codigo de maquina das instruções
-        else if(token=="stop") traducao=STOP;
-        else if(token=="load") traducao=LOAD;
-        else if(token=="store") traducao=STORE;
-        else if(token=="read") traducao=READ;
-        else if(token=="write") traducao=WRITE;
-        else if(token=="add") traducao=ADD;
-        else if(token=="subtract") traducao=SUBTRACT;
-        else if(token=="multiply") traducao=MULTIPLY;
-        else if(token=="divide") traducao=DIVIDE;
-        else if(token=="jump") traducao=JUMP;
-        else if(token=="jmpz") traducao=JMPZ;
-        else if(token=="jmpn") traducao=JMPN;
-        else if(token=="move") traducao=MOVE;
-        else if(token=="push") traducao=PUSH;
-        else if(token=="pop") traducao=POP;
-        else if(token=="call") traducao=CALL;
-        else if(token=="return") traducao=RETURN;
-        else if(token=="load_s") traducao=LOAD_S;
-        else if(token=="store_s") traducao=STORE_S;
-        else if(token=="loadc") traducao=LOADC;
-        else if(token=="loadi") traducao=LOADI;
-        else if(token=="storei") traducao=STOREI;
-        else if(token=="copytop") traducao=COPYTOP;
+        else if(!token.compare("stop")) instrucao.push_back(STOP);
+        else if(!token.compare("load")) instrucao.push_back(LOAD);
+        else if(!token.compare("store")) instrucao.push_back(STORE);
+        else if(!token.compare("read")) instrucao.push_back(READ);
+        else if(!token.compare("write")) instrucao.push_back(WRITE);
+        else if(!token.compare("add")) instrucao.push_back(ADD);
+        else if(!token.compare("subtract")) instrucao.push_back(SUBTRACT);
+        else if(!token.compare("multiply")) instrucao.push_back(MULTIPLY);
+        else if(!token.compare("divide")) instrucao.push_back(DIVIDE);
+        else if(!token.compare("jump")) instrucao.push_back(JUMP);
+        else if(!token.compare("jmpz")) instrucao.push_back(JMPZ);
+        else if(!token.compare("jmpn")) instrucao.push_back(JMPN);
+        else if(!token.compare("move")) instrucao.push_back(MOVE);
+        else if(!token.compare("push")) instrucao.push_back(PUSH);
+        else if(!token.compare("pop")) instrucao.push_back(POP);
+        else if(!token.compare("call")) instrucao.push_back(CALL);
+        else if(!token.compare("return")) instrucao.push_back(RETURN);
+        else if(!token.compare("load_s")) instrucao.push_back(LOAD_S);
+        else if(!token.compare("store_s")) instrucao.push_back(STORE_S);
+        else if(!token.compare("loadc")) instrucao.push_back(LOADC);
+        else if(!token.compare("loadi")) instrucao.push_back(LOADI);
+        else if(!token.compare("storei")) instrucao.push_back(STOREI);
+        else if(!token.compare("copytop")) instrucao.push_back(COPYTOP);
         //concatena o codigo das instruções com dos operandos registradores
-        else if(token=="A0") traducao+=A0;
-        else if(token=="A1") traducao+=A1;
-        else if(token=="A2") traducao+=A2;
-        else if(token=="A3") traducao+=A3;
-        //else posição de memoria direta
+        else if(!token.compare("A0")) instrucao.push_back(A0);
+        else if(!token.compare("A1")) instrucao.push_back(A1);
+        else if(!token.compare("A2")) instrucao.push_back(A2);
+        else if(!token.compare("A3")) instrucao.push_back(A3);
     }
 
-    cout << "T: " << traducao << endl;
+    string result, traducao, traducao_2;
 
-    string temp = decimalToHex(address);
-    string result;
+    //Monta instrução
+    if(instrucao[0]==STOP) {
 
-    //Adiciona '0s' a esquerda para completar 4 caracteres
-    while(result.length()<4-temp.length()) result+='0';
+        result=formataIncrementaAddress();
 
-    result+=temp;
+        traducao="00000000";
+        criaHex(traducao, result);
+
+
+        result=formataIncrementaAddress();
+
+        traducao_2="00000000";
+        criaHex(traducao_2, result);
+    }
+   // else if(instrucao[0].compare("load")) instrucao.push_back(LOAD);
+    //else if(instrucao[0].compare("store")) instrucao.push_back(STORE);
+    if(!instrucao[0].compare(READ)) {
+        result=formataIncrementaAddress();
+
+        traducao=instrucao[0]+"000";
+        criaHex(traducao, result);
+
+        result=formataIncrementaAddress();
+
+        traducao_2="000000"+instrucao[1];
+        criaHex(traducao_2, result);
+    }
+    //else if(instrucao[0].compare("write")) instrucao.push_back(WRITE);
+    else if(!instrucao[0].compare(ADD)){
+        result=formataIncrementaAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, result);
+
+        result=formataIncrementaAddress();
+
+        traducao_2="000000"+instrucao[2];
+        criaHex(traducao_2, result);
+    }
+    //else if(instrucao[0].compare("subtract")) instrucao.push_back(SUBTRACT);
+    //else if(instrucao[0].compare("multiply")) instrucao.push_back(MULTIPLY);
+    //else if(instrucao[0].compare("divide")) instrucao.push_back(DIVIDE);
+    else if(instrucao[0].compare("jump")) {
+        result=formataIncrementaAddress();
+
+        traducao=instrucao[0]+"000";
+        criaHex(traducao, result);
+
+        result=formataIncrementaAddress();
+
+        //if(instrucao[1]!="A0" && instrucao[1]!="A1" && instrucao[1]!="A2" && instrucao[1]!="A3") traducao_2="000000"+DecToBin(atoi(instrucao[1].c_str()));
+
+        traducao_2.clear();
+        while(traducao_2.length()+instrucao[1].length()<8) traducao_2+="0";
+        traducao_2+=instrucao[1];
+        criaHex(traducao_2, result);
+    }
+  /*  else if(instrucao[0].compare("jmpz")) instrucao.push_back(JMPZ);
+    else if(instrucao[0].compare("jmpn")) instrucao.push_back(JMPN);
+    else if(instrucao[0].compare("move")) instrucao.push_back(MOVE);
+    else if(instrucao[0].compare("push")) instrucao.push_back(PUSH);
+    else if(instrucao[0].compare("pop")) instrucao.push_back(POP);
+    else if(instrucao[0].compare("call")) instrucao.push_back(CALL);
+    else if(instrucao[0].compare("return")) instrucao.push_back(RETURN);
+    else if(instrucao[0].compare("load_s")) instrucao.push_back(LOAD_S);
+    else if(instrucao[0].compare("store_s")) instrucao.push_back(STORE_S);
+    else if(instrucao[0].compare("loadc")) instrucao.push_back(LOADC);
+    else if(instrucao[0].compare("loadi")) instrucao.push_back(LOADI);
+    else if(instrucao[0].compare("storei")) instrucao.push_back(STOREI);
+    else if(instrucao[0].compare("copytop")) instrucao.push_back(COPYTOP);*/
 
     //Imprime o resultado
-    if(traducao.length()<=8) {
+    /*if(traducao.length()<=8) {
         while(traducao.length()<8) traducao+='0';
         string toCheck = ":01" + result + "00" + GetHexFromBin(traducao);
         memoria.push_back(toCheck+checkSum(toCheck));
@@ -302,18 +382,20 @@ int pass_two(){
         toCheck = ":01" + result + "00" + GetHexFromBin(traducao_1);
         memoria.push_back(toCheck+checkSum(toCheck));
         address++;
-    }
+    }*/
+    instrucao.clear();
 
     return true;
 }
 
 int main(int argc, char *argv[]){
     f_name=argv[1];
+    //f_name="entrada_teste.a";
     file.open(f_name);
 
     while(pass_one());
     file.close();
-    file.open(argv[1]);
+    file.open(f_name);
     while(pass_two());
 
     //Imptime tabela de rotulos
