@@ -35,6 +35,7 @@
 using namespace std;
 
 ifstream file;
+ofstream outfile ("saida.hex",std::ofstream::binary);
 map <string, int> table; //Tabela de rotulos
 typedef pair<string, int> p;
 vector <p> table_data; //Vetor usado pela .data
@@ -249,7 +250,6 @@ int pass_two(){
         if(pos==-1)  pos = line.find(EOF); //Se não encontra mais espaço procure o fim da linha
         n++;
         token = line.substr(0, pos); //Pega uma palavra da linha
-        cout << token << endl;
         line.erase(0, pos + 1); //Apaga a palavra pra continuar iterando
 
 
@@ -580,7 +580,6 @@ int pass_two(){
         traducao=toCheck+checkSum(toCheck);
         table_data.push_back(make_pair(traducao, data));
         data-=2;
-        cout<< temp << ' ' << GetHexFromBin(temp) <<endl;
     }
 
     instrucao.clear();
@@ -597,11 +596,13 @@ int main(int argc, char *argv[]){
     file.close();
     file.open(f_name);
     while(pass_two());
+    file.close();
 
     //Imptime tabela de rotulos
     /*for(it=table.begin(); it!=table.end(); it++)
         cout << it->first << ' ' << "ILC: " << it->second << endl;*/
 
     //Imprime memoria
-    for(int i=0; i<memoria.size(); i++) cout << memoria[i] <<endl;
+    //for(int i=0; i<memoria.size(); i++) cout << memoria[i] <<endl;
+    for(int i=0; i<memoria.size(); i++) (i+1)==memoria.size() ? outfile << memoria[i] : outfile << memoria[i] << endl;
 }
