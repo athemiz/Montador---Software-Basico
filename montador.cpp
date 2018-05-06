@@ -329,7 +329,19 @@ int pass_two(){
         traducao_2="000000"+instrucao[1];
         criaHex(traducao_2, endereco);
     }
-    //else if(!instrucao[0].compare(WRITE)) instrucao.push_back(WRITE);
+    else if(!instrucao[0].compare(WRITE)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+"000";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2.clear();
+        while(traducao_2.length()+instrucao[1].length()<8) traducao_2+="0";
+        traducao_2+=instrucao[1];
+        criaHex(traducao_2, endereco);
+    }
     else if(!instrucao[0].compare(ADD)){
         endereco=formataAddress();
 
