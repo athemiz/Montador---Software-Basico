@@ -54,3 +54,5 @@ LOADI = Nao implementada
 STOREI  = Nao implementada
 
 COPYTOP  = Nao implementada
+
+.DATA = Nao Implementada
