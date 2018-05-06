@@ -169,12 +169,11 @@ void criaHex(string traducao, string posicao){
     address++;
 }
 
-string formataIncrementaAddress(){
+string formataAddress(){
     string temp = decimalToHex(address);
     string result="";
     while(result.length()<4-temp.length()) result+='0';
     result+=temp;
-    address++;
     return result;
 }
 
@@ -278,78 +277,87 @@ int pass_two(){
         else if(!token.compare("A3")) instrucao.push_back(A3);
     }
 
-    string result, traducao, traducao_2;
-
-    cout <<"t:"<< instrucao[0] << endl;
+    string endereco, traducao, traducao_2;
 
     //Monta instrução
     if(instrucao[0]==STOP) {
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao="00000000";
-        criaHex(traducao, result);
+        criaHex(traducao, endereco);
 
-
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao_2="00000000";
-        criaHex(traducao_2, result);
+        criaHex(traducao_2, endereco);
     }
    // else if(instrucao[0].compare("load")) instrucao.push_back(LOAD);
-    //else if(instrucao[0].compare("store")) instrucao.push_back(STORE);
+    else if(!instrucao[0].compare(STORE)) {
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2.clear();
+        while(traducao_2.length()+instrucao[2].length()<8) traducao_2+="0";
+        traducao_2+=instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
     if(!instrucao[0].compare(READ)) {
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao=instrucao[0]+"000";
-        criaHex(traducao, result);
+        criaHex(traducao, endereco);
 
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao_2="000000"+instrucao[1];
-        criaHex(traducao_2, result);
+        criaHex(traducao_2, endereco);
     }
     //else if(instrucao[0].compare("write")) instrucao.push_back(WRITE);
     else if(!instrucao[0].compare(ADD)){
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao=instrucao[0]+instrucao[1]+"0";
-        criaHex(traducao, result);
+        criaHex(traducao, endereco);
 
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao_2="000000"+instrucao[2];
-        criaHex(traducao_2, result);
+        criaHex(traducao_2, endereco);
     }
     //else if(instrucao[0].compare("subtract")) instrucao.push_back(SUBTRACT);
     //else if(instrucao[0].compare("multiply")) instrucao.push_back(MULTIPLY);
     //else if(instrucao[0].compare("divide")) instrucao.push_back(DIVIDE);
     else if(!instrucao[0].compare(JUMP)) {
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao=instrucao[0]+"000";
-        criaHex(traducao, result);
+        criaHex(traducao, endereco);
 
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         //if(instrucao[1]!="A0" && instrucao[1]!="A1" && instrucao[1]!="A2" && instrucao[1]!="A3") traducao_2="000000"+DecToBin(atoi(instrucao[1].c_str()));
 
         traducao_2.clear();
         while(traducao_2.length()+instrucao[1].length()<8) traducao_2+="0";
         traducao_2+=instrucao[1];
-        criaHex(traducao_2, result);
+        criaHex(traducao_2, endereco);
     }
     //else if(instrucao[0].compare("jmpz")) instrucao.push_back(JMPZ);
     //else if(instrucao[0].compare("jmpn")) instrucao.push_back(JMPN);
     else if(!instrucao[0].compare(MOVE)) {
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao=instrucao[0]+instrucao[1]+"0";
-        criaHex(traducao, result);
+        criaHex(traducao, endereco);
 
-        result=formataIncrementaAddress();
+        endereco=formataAddress();
 
         traducao_2="000000"+instrucao[2];
-        criaHex(traducao_2, result);
+        criaHex(traducao_2, endereco);
     }
     /*else if(instrucao[0].compare("push")) instrucao.push_back(PUSH);
     else if(instrucao[0].compare("pop")) instrucao.push_back(POP);
