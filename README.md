@@ -49,10 +49,10 @@ STORE_S = Nao implementada
 
 LOADC = Aparentemente Funcionando
 
-LOADI = Nao implementada
+LOADI = Aparentemente Funcionando
 
-STOREI  = Nao implementada
+STOREI  = Aparentemente Funcionando
 
-COPYTOP  = Nao implementada
+COPYTOP  = Aparentemente Funcionando
 
 .DATA = Nao Implementada
