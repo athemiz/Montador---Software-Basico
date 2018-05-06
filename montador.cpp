@@ -460,8 +460,32 @@ int pass_two(){
     }
     //else if(!instrucao[0].compare(CALL)) instrucao.push_back(CALL);
     //else if(!instrucao[0].compare(RETURN)) instrucao.push_back(RETURN);
-    //else if(!instrucao[0].compare(LOAD_S)) instrucao.push_back(LOAD_S);
-    //else if(!instrucao[0].compare(STORE_S)) instrucao.push_back(STORE_S);
+    else if(!instrucao[0].compare(LOAD_S)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2.clear();
+        while(traducao_2.length()+instrucao[2].length()<8) traducao_2+="0";
+        traducao_2+=instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
+    else if(!instrucao[0].compare(STORE_S)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2.clear();
+        while(traducao_2.length()+instrucao[2].length()<8) traducao_2+="0";
+        traducao_2+=instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
     else if(!instrucao[0].compare(LOADC)) {
         endereco=formataAddress();
 
@@ -475,9 +499,39 @@ int pass_two(){
         traducao_2+=instrucao[2];
         criaHex(traducao_2, endereco);
     }
-    //else if(!instrucao[0].compare(LOADI)) instrucao.push_back(LOADI);
-    //else if(!instrucao[0].compare(STOREI)) instrucao.push_back(STOREI);
-    //else if(!instrucao[0].compare(COPYTOP)) instrucao.push_back(COPYTOP);
+    else if(!instrucao[0].compare(LOADI)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2="000000"+instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
+    else if(!instrucao[0].compare(STOREI)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2="000000"+instrucao[2];
+        criaHex(traducao_2, endereco);
+    }
+    else if(!instrucao[0].compare(COPYTOP)){
+        endereco=formataAddress();
+
+        traducao=instrucao[0]+"000";
+        criaHex(traducao, endereco);
+
+        endereco=formataAddress();
+
+        traducao_2="000000"+instrucao[1];
+        criaHex(traducao_2, endereco);
+    }
 
     instrucao.clear();
 
