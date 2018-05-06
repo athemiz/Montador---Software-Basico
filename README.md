@@ -43,9 +43,9 @@ CALL = Nao implementada
 
 RETURN = Nao implementada
 
-LOAD_S = Nao implementada
+LOAD_S = Aparentemente Funcionando
 
-STORE_S = Nao implementada
+STORE_S = Aparentemente Funcionando
 
 LOADC = Aparentemente Funcionando
 
