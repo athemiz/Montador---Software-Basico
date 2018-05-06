@@ -17,7 +17,7 @@ STORE = Aparentemente Funcionando
 
 READ = Aparentemente Funcionando
 
-WRITE = Nao implementada
+WRITE = Aparentemente Funcionando
 
 ADD = Aparentemente Funcionando
 
