@@ -47,7 +47,7 @@ LOAD_S = Nao implementada
 
 STORE_S = Nao implementada
 
-LOADC = Nao implementada
+LOADC = Aparentemente Funcionando
 
 LOADI = Nao implementada
 
