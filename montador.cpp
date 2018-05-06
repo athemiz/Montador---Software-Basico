@@ -280,9 +280,10 @@ int pass_two(){
 
     string result, traducao, traducao_2;
 
+    cout <<"t:"<< instrucao[0] << endl;
+
     //Monta instrução
     if(instrucao[0]==STOP) {
-
         result=formataIncrementaAddress();
 
         traducao="00000000";
@@ -322,7 +323,7 @@ int pass_two(){
     //else if(instrucao[0].compare("subtract")) instrucao.push_back(SUBTRACT);
     //else if(instrucao[0].compare("multiply")) instrucao.push_back(MULTIPLY);
     //else if(instrucao[0].compare("divide")) instrucao.push_back(DIVIDE);
-    else if(instrucao[0].compare("jump")) {
+    else if(!instrucao[0].compare(JUMP)) {
         result=formataIncrementaAddress();
 
         traducao=instrucao[0]+"000";
@@ -337,10 +338,20 @@ int pass_two(){
         traducao_2+=instrucao[1];
         criaHex(traducao_2, result);
     }
-  /*  else if(instrucao[0].compare("jmpz")) instrucao.push_back(JMPZ);
-    else if(instrucao[0].compare("jmpn")) instrucao.push_back(JMPN);
-    else if(instrucao[0].compare("move")) instrucao.push_back(MOVE);
-    else if(instrucao[0].compare("push")) instrucao.push_back(PUSH);
+    //else if(instrucao[0].compare("jmpz")) instrucao.push_back(JMPZ);
+    //else if(instrucao[0].compare("jmpn")) instrucao.push_back(JMPN);
+    else if(!instrucao[0].compare(MOVE)) {
+        result=formataIncrementaAddress();
+
+        traducao=instrucao[0]+instrucao[1]+"0";
+        criaHex(traducao, result);
+
+        result=formataIncrementaAddress();
+
+        traducao_2="000000"+instrucao[2];
+        criaHex(traducao_2, result);
+    }
+    /*else if(instrucao[0].compare("push")) instrucao.push_back(PUSH);
     else if(instrucao[0].compare("pop")) instrucao.push_back(POP);
     else if(instrucao[0].compare("call")) instrucao.push_back(CALL);
     else if(instrucao[0].compare("return")) instrucao.push_back(RETURN);
