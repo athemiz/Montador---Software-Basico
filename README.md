@@ -41,7 +41,7 @@ POP = Aparentemente Funcionando
 
 CALL = Nao implementada
 
-RETURN
+RETURN = Nao implementada
 
 LOAD_S = Nao implementada
 
