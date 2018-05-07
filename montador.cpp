@@ -255,6 +255,7 @@ int pass_two(){
 
         //Realiza Desvio e pega os valores do .data (num_bytes e endereço)
         if(token[0]=='_' && n==1) continue;
+        else if(token[0]==';') break;
         //Concatena com desvio
         else if(token[0]=='_' && n>1) instrucao.push_back(DecToBin(table[token]));
         //numero direto
