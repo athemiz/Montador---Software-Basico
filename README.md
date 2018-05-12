@@ -24,15 +24,26 @@ Onde A0 é o registrador A0, _a e _b são valores guardados em memoria pelo .dat
 Instruções Utilizadas 12/17 -> 70.5% (contando o .data) 11/16 => 68.75% (sem contar o .data)
 
 read
+
 load_c
+
 load        
+
 multiply 
+
 add   
+
 subtract
+
 divide 
+
 write   
+
 jmpn
+
 move  
+
 stop     
+
 .data   
 
