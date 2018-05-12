@@ -5,9 +5,13 @@ entrada_teste1.a
 Equivalente a seguinte operação em C:
 
 resultado = (A0 + (_a * _b)) * 4 - 2) / 2;
+
 if( resultado >= 0 )
+
   printf("%d\n1\n", resultado);
+  
 else
+
   pprintf("%d\n-1\n", resultado);
 
 
