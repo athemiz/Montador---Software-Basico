@@ -1,0 +1,25 @@
+_start: read A0 
+_L0:
+load_c A2 2
+load A3 _b
+load A1 _a
+multiply A1 A3
+add A0 A1
+multiply A0 A2
+multiply A0 A2
+subtract A0 A2
+divide A0 A2
+write A0
+jmpn A0 _done2
+_done: 
+load_c A0 1
+move A0 A1
+write A1
+stop
+_done2: 
+load_c A0 -1
+move A0 A1
+write A1
+stop
+_a: .data 2 20
+_b: .data 2 10
