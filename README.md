@@ -4,7 +4,7 @@ entrada_teste1.a
 
 Equivalente a seguinte operação em C:
 
-
+----------
 
 resultado = (A0 + (_a * _b)) * 4 - 2) / 2;
 
@@ -16,7 +16,7 @@ else
 
   pprintf("%d\n-1\n", resultado);
 
-
+----------
 
 Onde A0 é o registrador A0, _a e _b são valores guardados em memoria pelo .data.
 
