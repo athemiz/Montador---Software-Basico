@@ -1,7 +1,0 @@
-_L0 ILC: 14
-_L1 ILC: 10
-_L2 ILC: 18
-_L3 ILC: 4
-_done ILC: 24
-_start ILC: 0
-_teste ILC: 26
