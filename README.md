@@ -25,9 +25,9 @@
 
 Entrada 1
 ----
-> 12/17 -> 70.5% (contando o .data)
+> 12/24 -> 50.00% (contando o .data)
 
-> 11/16 => 68.75% (sem contar o .data)
+> 11/23 => 47.82% (sem contar o .data)
 
 - read
 - load_c
@@ -44,19 +44,41 @@ Entrada 1
 
 Entrada 2
 ----
-> 12/17 -> 70.5% (contando o .data)
+> 11/24 -> 45.83% (contando o .data)
 
-> 11/16 => 68.75% (sem contar o .data)
+> 10/23 => 43.47% (sem contar o .data)
 
 - read
+- move
 - load_c
-- load        
+- jmpz
+- subtract
 - multiply 
+- call
+- write 
+- stop 
+- return
+- .data   
+
+Total -> Entrada 1 + Entrada 2
+----
+> 16/24 -> 66.66% (contando o .data)
+
+> 15/23 => 65.21% (sem contar o .data)
+
+- load        
 - add   
 - subtract
 - divide 
-- write   
 - jmpn
-- move  
-- stop     
+- read
+- move
+- load_c
+- jmpz
+- subtract
+- multiply 
+- call
+- write 
+- stop 
+- return
 - .data   
