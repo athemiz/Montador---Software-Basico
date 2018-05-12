@@ -1,0 +1,19 @@
+_start: read A0 
+read A1
+move A0 A3
+load_c A2 1
+jmpz A1 _done2
+subtract A1 A2
+call _pow
+_done: 
+write A0
+stop
+_done2:
+write A2
+stop
+_pow:
+jmpz A1 _return
+multiply A0 A3
+subtract A1 A2
+jump _pow
+_return: return
