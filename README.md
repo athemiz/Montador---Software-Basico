@@ -11,7 +11,6 @@
 >     printf("%d\n1\n", resultado);
 
 >else
-
 >     printf("%d\n-1\n", resultado);
 
 
